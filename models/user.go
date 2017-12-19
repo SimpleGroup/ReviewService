@@ -4,10 +4,12 @@ import (
 	"errors"
 	"strconv"
 	"time"
+	"github.com/astaxie/beego/orm"
 )
 
 var (
 	UserList map[string]*User
+	tabName ="user"
 )
 
 func init() {
@@ -70,6 +72,15 @@ func UpdateUser(uid string, uu *User) (a *User, err error) {
 		return u, nil
 	}
 	return nil, errors.New("User Not Exist")
+}
+
+func GetUserByName(loginName string,passWord string) (*User, error) {
+	user:=new(User)
+	err := orm.NewOrm().QueryTable(TableName(tabName)).One(&user)
+	if err!=nil {
+		return nil,err
+	}
+	return user,err
 }
 
 func Login(username, password string) bool {

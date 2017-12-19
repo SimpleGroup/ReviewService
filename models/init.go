@@ -6,7 +6,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
-func init() {
+func Init() {
 
 	maxIdle := 30
 	maxConn := 30
@@ -23,12 +23,12 @@ func init() {
 
 	dns := dbuser + ":" + dbpassword + "@/tcp(" + dbhost + ":" + dbport + ")/" + dbname + "?charset=utf8"
 
+	orm.RegisterDriver("mysql", orm.DRMySQL)
+	orm.RegisterDataBase("default", "mysql", dns)
+
 	//设置最大空闲连接数和最大数据库连接
 	orm.SetMaxIdleConns("default", maxIdle)
 	orm.SetMaxOpenConns("default", maxConn)
-
-	orm.RegisterDriver("mysql", orm.DRMySQL)
-	orm.RegisterDataBase("default", "mysql", dns)
 
 	//将用到的所有结构体映射到数据库中
 	orm.RegisterModel(new(User))

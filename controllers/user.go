@@ -3,13 +3,11 @@ package controllers
 import (
 	"ReviewService/models"
 	"encoding/json"
-
-	"github.com/astaxie/beego"
 )
 
 // Operations about Users
 type UserController struct {
-	beego.Controller
+	BaseController
 }
 
 // @Title CreateUser
@@ -100,12 +98,28 @@ func (u *UserController) Delete() {
 func (u *UserController) Login() {
 	username := u.GetString("username")
 	password := u.GetString("password")
-	if models.Login(username, password) {
-		u.Data["json"] = "login success"
+	user, e1 := models.GetUserByName(username, password)
+	resData:=new(ResultData)
+	if e1!=nil {
+		resData.Code=MSG_ERR
+		resData.Msg="user not exist"
 	} else {
-		u.Data["json"] = "user not exist"
+		resData.Code=MSG_Suc
+		resData.Msg="user not exist"
+		resData.data=user
+		data, e2 := json.Marshal(resData)
+		if e2!=nil {
+		}
+		u.Data["json"] = string(data)
 	}
 	u.ServeJSON()
+
+	//if models.Login(username, password) {
+	//	u.Data["json"] = data
+	//} else {
+	//	u.Data["json"] = "user not exist"
+	//}
+	//u.ServeJSON()
 }
 
 // @Title logout
