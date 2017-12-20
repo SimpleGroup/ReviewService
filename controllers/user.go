@@ -2,7 +2,6 @@ package controllers
 
 import (
 	"ReviewService/models"
-	"encoding/json"
 )
 
 // Operations about Users
@@ -10,122 +9,61 @@ type UserController struct {
 	BaseController
 }
 
-// @Title CreateUser
-// @Description create users
-// @Param	body		body 	models.User	true		"body for user content"
-// @Success 200 {int} models.User.Id
-// @Failure 403 body is empty
-// @router / [post]
-func (u *UserController) Post() {
-	var user models.User
-	json.Unmarshal(u.Ctx.Input.RequestBody, &user)
-	uid := models.AddUser(user)
-	u.Data["json"] = map[string]string{"uid": uid}
-	u.ServeJSON()
-}
-
-// @Title GetAll
-// @Description get all Users
-// @Success 200 {object} models.User
-// @router / [get]
-func (u *UserController) GetAll() {
-	users := models.GetAllUsers()
-	u.Data["json"] = users
-	u.ServeJSON()
-}
-
-// @Title Get
-// @Description get user by uid
-// @Param	uid		path 	string	true		"The key for staticblock"
-// @Success 200 {object} models.User
-// @Failure 403 :uid is empty
-// @router /:uid [get]
-func (u *UserController) Get() {
-	uid := u.GetString(":uid")
-	if uid != "" {
-		user, err := models.GetUser(uid)
-		if err != nil {
-			u.Data["json"] = err.Error()
-		} else {
-			u.Data["json"] = user
-		}
-	}
-	u.ServeJSON()
-}
-
-// @Title Update
-// @Description update the user
-// @Param	uid		path 	string	true		"The uid you want to update"
-// @Param	body		body 	models.User	true		"body for user content"
-// @Success 200 {object} models.User
-// @Failure 403 :uid is not int
-// @router /:uid [put]
-func (u *UserController) Put() {
-	uid := u.GetString(":uid")
-	if uid != "" {
-		var user models.User
-		json.Unmarshal(u.Ctx.Input.RequestBody, &user)
-		uu, err := models.UpdateUser(uid, &user)
-		if err != nil {
-			u.Data["json"] = err.Error()
-		} else {
-			u.Data["json"] = uu
-		}
-	}
-	u.ServeJSON()
-}
-
-// @Title Delete
-// @Description delete the user
-// @Param	uid		path 	string	true		"The uid you want to delete"
-// @Success 200 {string} delete success!
-// @Failure 403 uid is empty
-// @router /:uid [delete]
-func (u *UserController) Delete() {
-	uid := u.GetString(":uid")
-	models.DeleteUser(uid)
-	u.Data["json"] = "delete success!"
-	u.ServeJSON()
-}
-
 // @Title Login
 // @Description Logs user into the system
-// @Param	username		query 	string	true		"The username for login"
-// @Param	password		query 	string	true		"The password for login"
+// @Param	username		formData 	string	true		"The username for login"
+// @Param	password		formData 	string	true		"The password for login"
 // @Success 200 {string} login success
 // @Failure 403 user not exist
-// @router /login [get]
+// @router /login [post]
 func (u *UserController) Login() {
 	username := u.GetString("username")
-	password := u.GetString("password")
-	user, e1 := models.GetUserByName(username, password)
+	password:=u.GetString("password")
+	user, e1 := models.GetUserByName(username)
 	resData:=new(ResultData)
 	if e1!=nil {
 		resData.Code=MSG_ERR
 		resData.Msg="user not exist"
 	} else {
-		resData.Code=MSG_Suc
-		resData.Msg="user not exist"
-		resData.data=user
-		data, e2 := json.Marshal(resData)
-		if e2!=nil {
+		if user.Username==username&&user.Password==password {
+			resData.Code=MSG_Suc
+			resData.Msg="login success"
+		}else {
+			resData.Code=MSG_ERR
+			resData.Msg="用户名或密码错误"
 		}
-		u.Data["json"] = string(data)
 	}
+	resData.data=user
+	u.Data["json"] = resData
 	u.ServeJSON()
+}
 
-	//if models.Login(username, password) {
-	//	u.Data["json"] = data
-	//} else {
-	//	u.Data["json"] = "user not exist"
-	//}
-	//u.ServeJSON()
+//@Title Register
+//@Description add user into server
+//@Param	username		formData	string	true		"The username for register"
+//@Param	password		formData	string	true		"The password for register"
+//@router /register [post]
+func (u *UserController) Register()  {
+	username := u.GetString("username")
+	password := u.GetString("password")
+	user:=models.User{Username:username,Password:password}
+	resData:=new(ResultData)
+	isSu := models.AddUser(&user)
+	if isSu{
+		resData.Code=MSG_ERR
+		resData.Msg="注册失败"
+	}else {
+		resData.Code=MSG_Suc
+		resData.Msg="注册成功"
+	}
+	u.Data["json"]=resData
+	u.ServeJSON()
 }
 
 // @Title logout
 // @Description Logs out current logged in user session
 // @Success 200 {string} logout success
-// @router /logout [get]
+// @router /logout [post]
 func (u *UserController) Logout() {
 	u.Data["json"] = "logout success"
 	u.ServeJSON()

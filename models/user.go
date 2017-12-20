@@ -2,8 +2,8 @@ package models
 
 import (
 	"errors"
-	"strconv"
-	"time"
+	_"strconv"
+	_"time"
 	"github.com/astaxie/beego/orm"
 )
 
@@ -14,28 +14,32 @@ var (
 
 func init() {
 	UserList = make(map[string]*User)
-	u := User{"user_11111", "astaxie", "11111", Profile{"male", 20, "Singapore", "astaxie@gmail.com"}}
+	u := User{0, "astaxie", "11111"}
 	UserList["user_11111"] = &u
 }
 
 type User struct {
-	Id       string
+	Id       int
 	Username string
 	Password string
-	Profile  Profile
 }
 
-type Profile struct {
-	Gender  string
-	Age     int
-	Address string
-	Email   string
+//自定义表名
+func (u *User)TableName() string {
+	return "service_user"
 }
 
-func AddUser(u User) string {
-	u.Id = "user_" + strconv.FormatInt(time.Now().UnixNano(), 10)
-	UserList[u.Id] = &u
-	return u.Id
+//注册用户时往数据库加用户
+func AddUser(u *User) bool {
+	var isSu bool
+	_, e := orm.NewOrm().Insert(u)
+	if e!=nil {
+		isSu=false
+		println(e.Error())
+	}else {
+		isSu=true
+	}
+	return isSu
 }
 
 func GetUser(uid string) (u *User, err error) {
@@ -57,30 +61,22 @@ func UpdateUser(uid string, uu *User) (a *User, err error) {
 		if uu.Password != "" {
 			u.Password = uu.Password
 		}
-		if uu.Profile.Age != 0 {
-			u.Profile.Age = uu.Profile.Age
-		}
-		if uu.Profile.Address != "" {
-			u.Profile.Address = uu.Profile.Address
-		}
-		if uu.Profile.Gender != "" {
-			u.Profile.Gender = uu.Profile.Gender
-		}
-		if uu.Profile.Email != "" {
-			u.Profile.Email = uu.Profile.Email
-		}
 		return u, nil
 	}
 	return nil, errors.New("User Not Exist")
 }
 
-func GetUserByName(loginName string,passWord string) (*User, error) {
-	user:=new(User)
-	err := orm.NewOrm().QueryTable(TableName(tabName)).One(&user)
+func GetUserByName(loginName string) (*User, error) {
+	var user User
+	err := orm.NewOrm().QueryTable(TableName(tabName)).Filter("username",loginName).One(&user)
 	if err!=nil {
 		return nil,err
 	}
-	return user,err
+	return &user,err
+}
+
+func GetUserInfoByName() () {
+	
 }
 
 func Login(username, password string) bool {

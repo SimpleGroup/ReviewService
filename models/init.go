@@ -11,17 +11,11 @@ func Init() {
 	maxIdle := 30
 	maxConn := 30
 
-	dbhost := beego.AppConfig.String("db.host")
-	dbport := beego.AppConfig.String("db.port")
 	dbuser := beego.AppConfig.String("db.user")
 	dbpassword := beego.AppConfig.String("db.password")
 	dbname := beego.AppConfig.String("db.name")
 
-	if dbport == "" {
-		dbport = "3306"
-	}
-
-	dns := dbuser + ":" + dbpassword + "@/tcp(" + dbhost + ":" + dbport + ")/" + dbname + "?charset=utf8"
+	dns := dbuser + ":" + dbpassword + "@/" + dbname + "?charset=utf8"
 
 	orm.RegisterDriver("mysql", orm.DRMySQL)
 	orm.RegisterDataBase("default", "mysql", dns)
@@ -32,6 +26,9 @@ func Init() {
 
 	//将用到的所有结构体映射到数据库中
 	orm.RegisterModel(new(User))
+
+	//自动建表
+	orm.RunSyncdb("default",false,true)
 
 	if beego.AppConfig.String("runmode") == beego.DEV {
 		orm.Debug = true

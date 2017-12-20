@@ -100,106 +100,19 @@ paths:
           description: '{string} delete success!'
         "403":
           description: objectId is empty
-  /user/:
-    get:
-      tags:
-      - user
-      description: get all Users
-      operationId: UserController.GetAll
-      responses:
-        "200":
-          description: ""
-          schema:
-            $ref: '#/definitions/models.User'
-    post:
-      tags:
-      - user
-      description: create users
-      operationId: UserController.CreateUser
-      parameters:
-      - in: body
-        name: body
-        description: body for user content
-        required: true
-        schema:
-          $ref: '#/definitions/models.User'
-      responses:
-        "200":
-          description: '{int} models.User.Id'
-        "403":
-          description: body is empty
-  /user/{uid}:
-    get:
-      tags:
-      - user
-      description: get user by uid
-      operationId: UserController.Get
-      parameters:
-      - in: path
-        name: uid
-        description: The key for staticblock
-        required: true
-        type: string
-      responses:
-        "200":
-          description: ""
-          schema:
-            $ref: '#/definitions/models.User'
-        "403":
-          description: :uid is empty
-    put:
-      tags:
-      - user
-      description: update the user
-      operationId: UserController.Update
-      parameters:
-      - in: path
-        name: uid
-        description: The uid you want to update
-        required: true
-        type: string
-      - in: body
-        name: body
-        description: body for user content
-        required: true
-        schema:
-          $ref: '#/definitions/models.User'
-      responses:
-        "200":
-          description: ""
-          schema:
-            $ref: '#/definitions/models.User'
-        "403":
-          description: :uid is not int
-    delete:
-      tags:
-      - user
-      description: delete the user
-      operationId: UserController.Delete
-      parameters:
-      - in: path
-        name: uid
-        description: The uid you want to delete
-        required: true
-        type: string
-      responses:
-        "200":
-          description: '{string} delete success!'
-        "403":
-          description: uid is empty
   /user/login:
-    get:
+    post:
       tags:
       - user
       description: Logs user into the system
       operationId: UserController.Login
       parameters:
-      - in: query
+      - in: formData
         name: username
         description: The username for login
         required: true
         type: string
-      - in: query
+      - in: formData
         name: password
         description: The password for login
         required: true
@@ -210,7 +123,7 @@ paths:
         "403":
           description: user not exist
   /user/logout:
-    get:
+    post:
       tags:
       - user
       description: Logs out current logged in user session
@@ -218,6 +131,23 @@ paths:
       responses:
         "200":
           description: '{string} logout success'
+  /user/register:
+    post:
+      tags:
+      - user
+      description: add user into server
+      operationId: UserController.Register
+      parameters:
+      - in: formData
+        name: username
+        description: The username for register
+        required: true
+        type: string
+      - in: formData
+        name: password
+        description: The password for register
+        required: true
+        type: string
 definitions:
   models.Object:
     title: Object
@@ -230,31 +160,6 @@ definitions:
       Score:
         type: integer
         format: int64
-  models.Profile:
-    title: Profile
-    type: object
-    properties:
-      Address:
-        type: string
-      Age:
-        type: integer
-        format: int64
-      Email:
-        type: string
-      Gender:
-        type: string
-  models.User:
-    title: User
-    type: object
-    properties:
-      Id:
-        type: string
-      Password:
-        type: string
-      Profile:
-        $ref: '#/definitions/models.Profile'
-      Username:
-        type: string
 tags:
 - name: object
   description: |
