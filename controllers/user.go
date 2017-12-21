@@ -13,13 +13,13 @@ type UserController struct {
 // @Description Logs user into the system
 // @Param	username		formData 	string	true		"The username for login"
 // @Param	password		formData 	string	true		"The password for login"
-// @Success 200 {string} login success
+// @Success 200 {object} models.user.User
 // @Failure 403 user not exist
 // @router /login [post]
 func (u *UserController) Login() {
 	username := u.GetString("username")
 	password:=u.GetString("password")
-	user, e1 := models.GetUserByName(username)
+	user, e1 := models.GetUserInfoByName(username)
 	resData:=new(ResultData)
 	if e1!=nil {
 		resData.Code=MSG_ERR
@@ -33,7 +33,7 @@ func (u *UserController) Login() {
 			resData.Msg="用户名或密码错误"
 		}
 	}
-	resData.data=user
+	resData.Data=user
 	u.Data["json"] = resData
 	u.ServeJSON()
 }
@@ -42,6 +42,8 @@ func (u *UserController) Login() {
 //@Description add user into server
 //@Param	username		formData	string	true		"The username for register"
 //@Param	password		formData	string	true		"The password for register"
+//@Success 200 register success
+//@Failure 403 user has Registered
 //@router /register [post]
 func (u *UserController) Register()  {
 	username := u.GetString("username")
@@ -49,12 +51,12 @@ func (u *UserController) Register()  {
 	user:=models.User{Username:username,Password:password}
 	resData:=new(ResultData)
 	isSu := models.AddUser(&user)
-	if isSu{
-		resData.Code=MSG_ERR
-		resData.Msg="注册失败"
-	}else {
+	if isSu {
 		resData.Code=MSG_Suc
 		resData.Msg="注册成功"
+	}else {
+		resData.Code=MSG_ERR
+		resData.Msg="注册失败,该用户已存在"
 	}
 	u.Data["json"]=resData
 	u.ServeJSON()

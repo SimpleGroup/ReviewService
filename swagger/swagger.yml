@@ -119,7 +119,9 @@ paths:
         type: string
       responses:
         "200":
-          description: '{string} login success'
+          description: ""
+          schema:
+            $ref: '#/definitions/models.User'
         "403":
           description: user not exist
   /user/logout:
@@ -148,6 +150,11 @@ paths:
         description: The password for register
         required: true
         type: string
+      responses:
+        "200":
+          description: register success
+        "403":
+          description: user has Registered
 definitions:
   models.Object:
     title: Object
@@ -160,6 +167,17 @@ definitions:
       Score:
         type: integer
         format: int64
+  models.User:
+    title: User
+    type: object
+    properties:
+      Id:
+        type: integer
+        format: int64
+      Password:
+        type: string
+      Username:
+        type: string
 tags:
 - name: object
   description: |

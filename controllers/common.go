@@ -1,10 +1,12 @@
 package controllers
 
-import "github.com/astaxie/beego"
+import (
+	"github.com/astaxie/beego"
+)
 
 const (
 	MSG_Suc = 200
-	MSG_ERR = 403
+	MSG_ERR = 400
 )
 
 type BaseController struct {
@@ -14,6 +16,6 @@ type BaseController struct {
 type ResultData struct {
 	Code int
 	Msg string
-	data interface{}
+	Data interface{}
 }
 

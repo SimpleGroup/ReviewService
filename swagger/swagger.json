@@ -175,7 +175,10 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "{string} login success"
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/models.User"
+                        }
                     },
                     "403": {
                         "description": "user not exist"
@@ -219,7 +222,15 @@
                         "required": true,
                         "type": "string"
                     }
-                ]
+                ],
+                "responses": {
+                    "200": {
+                        "description": "register success"
+                    },
+                    "403": {
+                        "description": "user has Registered"
+                    }
+                }
             }
         }
     },
@@ -237,6 +248,22 @@
                 "Score": {
                     "type": "integer",
                     "format": "int64"
+                }
+            }
+        },
+        "models.User": {
+            "title": "User",
+            "type": "object",
+            "properties": {
+                "Id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "Password": {
+                    "type": "string"
+                },
+                "Username": {
+                    "type": "string"
                 }
             }
         }
