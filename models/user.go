@@ -20,8 +20,8 @@ func init() {
 
 type User struct {
 	Id       int
-	Username string
-	Password string
+	Username string `orm:"column(user_name)"`
+	Password string `orm:"column(user_pwd)"`
 }
 
 //自定义表名
@@ -72,7 +72,7 @@ func UpdateUser(uid string, uu *User) (a *User, err error) {
 //查询用户是否在数据库中
 //true表示未注册,false表示已注册
 func GetUserByName(u *User) bool {
-	err := orm.NewOrm().Read(u,"username")
+	err := orm.NewOrm().Read(u,"user_name")
 	if err!=nil {
 		return true
 	}
@@ -81,7 +81,7 @@ func GetUserByName(u *User) bool {
 
 func GetUserInfoByName(loginName string) (*User,error) {
 	var user User
-	err := orm.NewOrm().QueryTable(TableName(tabName)).Filter("username",loginName).One(&user)
+	err := orm.NewOrm().QueryTable(TableName(tabName)).Filter("user_name",loginName).One(&user)
 	if err!=nil {
 		return nil,err
 	}

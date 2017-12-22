@@ -25,7 +25,7 @@ func Init() {
 	orm.SetMaxOpenConns("default", maxConn)
 
 	//将用到的所有结构体映射到数据库中
-	orm.RegisterModel(new(User))
+	orm.RegisterModel(new(User),new(AllQuestion),new(QuestionDetails))
 
 	//自动建表
 	orm.RunSyncdb("default",false,true)
@@ -35,7 +35,7 @@ func Init() {
 	}
 }
 
-//该方法可以直接得到操作的哪张表名，因为统一处理，所以表名暂时定为service_user和service_examination
+//该方法可以直接得到操作的哪张表名，因为统一处理，所以表名暂时定为service_user和service_question
 func TableName(suffixName string) string {
 	return beego.AppConfig.String("db.prefix") + suffixName
 }

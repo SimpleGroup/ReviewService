@@ -1,0 +1,11 @@
+1，用户表
+用户表表名为server_user
+字段为id（主键），user_name(用户名)，user_pwd(密码)
+
+2，题目总表
+题目表表名为service_question
+字段为id(主键)，category(题目类别)，details(题目详情)
+
+3，单个题目表
+单个题目表名为service_question_details
+字段名为id(主键)，question_type(题目类型){1，选择题:2,文字描述题}，question(题目)，option(选项)，answer(答案)

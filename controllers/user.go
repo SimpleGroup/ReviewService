@@ -13,7 +13,7 @@ type UserController struct {
 // @Description Logs user into the system
 // @Param	username		formData 	string	true		"The username for login"
 // @Param	password		formData 	string	true		"The password for login"
-// @Success 200 {object} models.user.User
+// @Success 200 {object} models.question.Question
 // @Failure 403 user not exist
 // @router /login [post]
 func (u *UserController) Login() {
@@ -23,11 +23,11 @@ func (u *UserController) Login() {
 	resData:=new(ResultData)
 	if e1!=nil {
 		resData.Code=MSG_ERR
-		resData.Msg="user not exist"
+		resData.Msg="用户不存在"
 	} else {
 		if user.Username==username&&user.Password==password {
 			resData.Code=MSG_Suc
-			resData.Msg="login success"
+			resData.Msg="登录成功"
 		}else {
 			resData.Code=MSG_ERR
 			resData.Msg="用户名或密码错误"
