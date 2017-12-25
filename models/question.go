@@ -4,9 +4,9 @@ package models
 // Category:题目类别
 // Details:题目类别 0：安卓，1：java
 type AllQuestion struct {
-	Id       int
+	Id       int              `orm:"pk"`
 	Category int              `orm:"column(category)"`
-	Details  *QuestionDetails `orm:"reverse(many)"`
+	Details  *QuestionDetails `orm:"rel(one)"`
 }
 
 //自定义表名
@@ -20,11 +20,11 @@ func (q *AllQuestion) TableName() string {
 // Option:选择题的选项	选项形如 "A:...;B:...;C...;D...;"选项之间用分号隔开
 // Answer:选择题的答案
 type QuestionDetails struct {
-	Id           int
-	QuestionType int          `orm:"column(question_type)"`
-	Question     string       `orm:"column(question)"`
-	Option       string       `orm:"column(option)"`
-	Answer       string       `orm:"column(answer)"`
+	Id           int    `orm:"pk"`
+	QuestionType int    `orm:"column(question_type)"`
+	Question     string `orm:"column(question)"`
+	Option       string `orm:"column(option)"`
+	Answer       string `orm:"column(answer)"`
 }
 
 //自定义表名

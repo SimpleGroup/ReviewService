@@ -11,6 +11,24 @@ info:
     url: http://www.apache.org/licenses/LICENSE-2.0.html
 basePath: /v1
 paths:
+  /question/addQuestion:
+    post:
+      tags:
+      - question
+      description: Add question to DB
+      operationId: QuestionController.AddQuestion
+      parameters:
+      - in: body
+        name: body
+        description: QuestionBody
+        required: true
+        schema:
+          $ref: '#/definitions/models.AllQuestion'
+      responses:
+        "200":
+          description: '{string} Add Success'
+        "403":
+          description: Add fail
   /user/login:
     post:
       tags:
@@ -32,7 +50,7 @@ paths:
         "200":
           description: ""
           schema:
-            $ref: '#/definitions/.Question'
+            $ref: '#/definitions/models.AllQuestion'
         "403":
           description: user not exist
   /user/logout:
@@ -67,8 +85,34 @@ paths:
         "403":
           description: user has Registered
 definitions:
-  .Question:
+  models.AllQuestion:
+    title: AllQuestion
     type: object
+    properties:
+      Category:
+        type: integer
+        format: int64
+      Details:
+        $ref: '#/definitions/models.QuestionDetails'
+      Id:
+        type: integer
+        format: int64
+  models.QuestionDetails:
+    title: QuestionDetails
+    type: object
+    properties:
+      Answer:
+        type: string
+      Id:
+        type: integer
+        format: int64
+      Option:
+        type: string
+      Question:
+        type: string
+      QuestionType:
+        type: integer
+        format: int64
 tags:
 - name: user
   description: |

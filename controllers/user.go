@@ -13,7 +13,7 @@ type UserController struct {
 // @Description Logs user into the system
 // @Param	username		formData 	string	true		"The username for login"
 // @Param	password		formData 	string	true		"The password for login"
-// @Success 200 {object} models.question.Question
+// @Success 200 {object} models.question.AllQuestion
 // @Failure 403 user not exist
 // @router /login [post]
 func (u *UserController) Login() {

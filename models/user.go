@@ -1,7 +1,6 @@
 package models
 
 import (
-	"errors"
 	_"strconv"
 	_"time"
 	"github.com/astaxie/beego/orm"
@@ -45,30 +44,6 @@ func AddUser(u *User) bool {
 	return isSu
 }
 
-func GetUser(uid string) (u *User, err error) {
-	if u, ok := UserList[uid]; ok {
-		return u, nil
-	}
-	return nil, errors.New("User not exists")
-}
-
-func GetAllUsers() map[string]*User {
-	return UserList
-}
-
-func UpdateUser(uid string, uu *User) (a *User, err error) {
-	if u, ok := UserList[uid]; ok {
-		if uu.Username != "" {
-			u.Username = uu.Username
-		}
-		if uu.Password != "" {
-			u.Password = uu.Password
-		}
-		return u, nil
-	}
-	return nil, errors.New("User Not Exist")
-}
-
 //查询用户是否在数据库中
 //true表示未注册,false表示已注册
 func GetUserByName(u *User) bool {
@@ -88,15 +63,3 @@ func GetUserInfoByName(loginName string) (*User,error) {
 	return &user,err
 }
 
-func Login(username, password string) bool {
-	for _, u := range UserList {
-		if u.Username == username && u.Password == password {
-			return true
-		}
-	}
-	return false
-}
-
-func DeleteUser(uid string) {
-	delete(UserList, uid)
-}
