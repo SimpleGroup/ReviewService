@@ -26,7 +26,7 @@ paths:
           $ref: '#/definitions/models.AllQuestion'
       responses:
         "200":
-          description: '{string} Add Success'
+          description: Add Success
         "403":
           description: Add fail
   /user/login:
@@ -92,11 +92,11 @@ definitions:
       Category:
         type: integer
         format: int64
-      Details:
-        $ref: '#/definitions/models.QuestionDetails'
       Id:
         type: integer
         format: int64
+      QuestionDetails:
+        $ref: '#/definitions/models.QuestionDetails'
   models.QuestionDetails:
     title: QuestionDetails
     type: object

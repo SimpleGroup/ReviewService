@@ -35,7 +35,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "{string} Add Success"
+                        "description": "Add Success"
                     },
                     "403": {
                         "description": "Add fail"
@@ -136,12 +136,12 @@
                     "type": "integer",
                     "format": "int64"
                 },
-                "Details": {
-                    "$ref": "#/definitions/models.QuestionDetails"
-                },
                 "Id": {
                     "type": "integer",
                     "format": "int64"
+                },
+                "QuestionDetails": {
+                    "$ref": "#/definitions/models.QuestionDetails"
                 }
             }
         },
