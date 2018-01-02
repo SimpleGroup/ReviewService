@@ -1,6 +1,6 @@
 项目介绍
 ---
-该项目是用golang的beego框架搭建的一个简单的RESTful api应用，对外提供可供移动端和web调用的api，该项目采用的是beego和swagger结合的方法，使得该项目的使用对于前端开发人员来说极度方便。
+该项目是用golang的beego框架搭建的一个简单的RESTful api应用，对外提供可供移动端和web调用的api，该项目采用的是beego和swagger结合的方法，使得该项目的api调用及调试对于前端开发人员来说极其方便。
 
 项目环境
 ---
