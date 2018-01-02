@@ -1,2 +1,3 @@
 # ReviewService
 RESTful api for Golang
+在数据库中新建一个schema名字为review_db(因为本项目目前只加入了mysql的drive)，所以目前只支持mysql，然后项目git下来以后就可以直接运行了
