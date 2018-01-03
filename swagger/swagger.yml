@@ -23,12 +23,23 @@ paths:
         description: QuestionBody
         required: true
         schema:
-          $ref: '#/definitions/models.AllQuestion'
+          $ref: '#/definitions/models.AllQuestionResult'
       responses:
         "200":
           description: Add Success
         "403":
           description: Add fail
+  /question/getAllQuestion:
+    get:
+      tags:
+      - question
+      description: Get All Question From DB
+      operationId: QuestionController.GetAllQuestion
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/models.AllQuestionResult'
   /user/login:
     post:
       tags:
@@ -97,6 +108,23 @@ definitions:
       Id:
         type: integer
         format: int64
+      Question:
+        type: string
+      QuestionType:
+        type: integer
+        format: int64
+  models.AllQuestionResult:
+    title: AllQuestionResult
+    type: object
+    properties:
+      Answer:
+        type: string
+      Category:
+        type: integer
+        format: int64
+      Id:
+        type: integer
+        format: int64
       Options:
         type: array
         items:
@@ -110,8 +138,9 @@ definitions:
     title: Option
     type: object
     properties:
-      AllQuestion:
-        $ref: '#/definitions/models.AllQuestion'
+      AllQuestionId:
+        type: integer
+        format: int64
       Check:
         type: string
       Description:
