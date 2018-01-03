@@ -75,9 +75,9 @@ func FindAllQuestion() ([]*AllQuestionResult) {
 	}
 	for k,v:= range allQuestions {
 		var options []*Option
-		_, e2 := orm.NewOrm().QueryTable("option").Filter("all_question_id", allQuestions[k].Id).All(&options)
+		_, e2 := orm.NewOrm().QueryTable("service_option").Filter("all_question_id", allQuestions[k].Id).All(&options)
 		if e2 !=nil {
-
+			options=nil
 		}
 		var allQuestionResult=AllQuestionResult{Category:v.Category,QuestionType:v.QuestionType,Question:v.Question,Options:options,Answer:v.Answer}
 		allQuestionResults=append(allQuestionResults, &allQuestionResult)
