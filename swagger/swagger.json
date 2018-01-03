@@ -132,6 +132,9 @@
             "title": "AllQuestion",
             "type": "object",
             "properties": {
+                "Answer": {
+                    "type": "string"
+                },
                 "Category": {
                     "type": "integer",
                     "format": "int64"
@@ -140,29 +143,35 @@
                     "type": "integer",
                     "format": "int64"
                 },
-                "QuestionDetails": {
-                    "$ref": "#/definitions/models.QuestionDetails"
-                }
-            }
-        },
-        "models.QuestionDetails": {
-            "title": "QuestionDetails",
-            "type": "object",
-            "properties": {
-                "Answer": {
-                    "type": "string"
-                },
-                "Id": {
-                    "type": "integer",
-                    "format": "int64"
-                },
-                "Option": {
-                    "type": "string"
+                "Options": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Option"
+                    }
                 },
                 "Question": {
                     "type": "string"
                 },
                 "QuestionType": {
+                    "type": "integer",
+                    "format": "int64"
+                }
+            }
+        },
+        "models.Option": {
+            "title": "Option",
+            "type": "object",
+            "properties": {
+                "AllQuestion": {
+                    "$ref": "#/definitions/models.AllQuestion"
+                },
+                "Check": {
+                    "type": "string"
+                },
+                "Description": {
+                    "type": "string"
+                },
+                "Id": {
                     "type": "integer",
                     "format": "int64"
                 }

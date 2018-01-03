@@ -25,7 +25,7 @@ func Init() {
 	orm.SetMaxOpenConns("default", maxConn)
 
 	//将用到的所有结构体映射到数据库中
-	orm.RegisterModel(new(User),new(AllQuestion),new(QuestionDetails))
+	orm.RegisterModel(new(User),new(AllQuestion),new(Option))
 
 	//自动建表
 	orm.RunSyncdb("default",false,true)
