@@ -66,10 +66,10 @@ func AddQuestionToDB(a *AllQuestionResult) bool {
 }
 
 //查看全部题库信息
-func FindAllQuestion() ([]*AllQuestionResult) {
+func FindAllQuestion(pageNum int, pageSize int) ([]*AllQuestionResult) {
 	var allQuestionResults []*AllQuestionResult
 	var allQuestions []*AllQuestion
-	_, e := orm.NewOrm().QueryTable("service_question").All(&allQuestions)
+	_, e := orm.NewOrm().QueryTable("service_question").Limit(pageNum,pageNum*pageSize).All(&allQuestions)
 	if e != nil {
 		println(e.Error())
 	}
