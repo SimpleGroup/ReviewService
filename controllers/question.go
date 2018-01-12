@@ -36,8 +36,8 @@ func (q *QuestionController) AddQuestion() {
 
 // @Title GetAllQuestion
 // @Description Get All Question From DB
-// @Param	pageNum		query	int		true		"每一页的条数"
-// @Param	pageSize	query	int		true		"请求的是第几页的数据"
+// @Param pageNum query int true "每一页的条数"
+// @Param pageSize query int true "请求的是第几页的数据"
 // @Success 200 {object} models.question.AllQuestionResult
 // @failure 403 找不到数据
 // @router /getAllQuestion [get]
@@ -45,11 +45,16 @@ func (q *QuestionController) AddQuestion() {
 func (q *QuestionController) GetAllQuestion() {
 	pageNum, _ := q.GetInt("pageNum")
 	pageSize, _ := q.GetInt("pageSize")
-	question := models.FindAllQuestion(pageNum,pageSize)
+	question := models.FindAllQuestion(pageNum, pageSize)
 	var resultData ResultData
-	resultData.Code=MSG_Suc
-	resultData.Msg="查询成功"
-	resultData.Data=question
-	q.Data["json"]=resultData
+	if question!=nil {
+		resultData.Code = MSG_ERR
+		resultData.Msg = "数据为空"
+	}else {
+		resultData.Code = MSG_Suc
+		resultData.Msg = "查询成功"
+	}
+	resultData.Data = question
+	q.Data["json"] = resultData
 	q.ServeJSON()
 }

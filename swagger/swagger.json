@@ -50,6 +50,24 @@
                 ],
                 "description": "Get All Question From DB",
                 "operationId": "QuestionController.GetAllQuestion",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "pageNum",
+                        "description": "每一页的条数",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    {
+                        "in": "query",
+                        "name": "pageSize",
+                        "description": "请求的是第几页的数据",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "",
