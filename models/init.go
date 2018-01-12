@@ -15,7 +15,7 @@ func Init() {
 	dbpassword := beego.AppConfig.String("db.password")
 	dbname := beego.AppConfig.String("db.name")
 
-	dns := dbuser + ":" + dbpassword + "@/" + dbname + "?charset=utf8"
+	dns := dbuser + ":" + dbpassword + "@/" + dbname + "?charset=utf8&loc=Local"
 
 	orm.RegisterDriver("mysql", orm.DRMySQL)
 	orm.RegisterDataBase("default", "mysql", dns)

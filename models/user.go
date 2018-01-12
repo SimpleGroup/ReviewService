@@ -4,6 +4,7 @@ import (
 	_"strconv"
 	_"time"
 	"github.com/astaxie/beego/orm"
+	"fmt"
 )
 
 var (
@@ -19,8 +20,9 @@ func init() {
 
 type User struct {
 	Id       int
-	Username string `orm:"column(user_name)"`
-	Password string `orm:"column(user_pwd)"`
+	UserName string `orm:"column(user_name)"`
+	PassWord string `orm:"column(user_pwd)"`
+	CreateTime
 }
 
 //自定义表名
