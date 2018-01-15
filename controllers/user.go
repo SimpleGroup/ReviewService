@@ -25,7 +25,7 @@ func (u *UserController) Login() {
 		resData.Code=MSG_ERR
 		resData.Msg="用户不存在"
 	} else {
-		if user.Username==username&&user.Password==password {
+		if user.UserName==username&&user.PassWord==password {
 			resData.Code=MSG_Suc
 			resData.Msg="登录成功"
 		}else {
@@ -48,7 +48,7 @@ func (u *UserController) Login() {
 func (u *UserController) Register()  {
 	username := u.GetString("username")
 	password := u.GetString("password")
-	user:=models.User{Username:username,Password:password}
+	user:=models.User{UserName:username,PassWord:password}
 	resData:=new(ResultData)
 	isSu := models.AddUser(&user)
 	if isSu {
