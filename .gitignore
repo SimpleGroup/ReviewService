@@ -17,4 +17,4 @@
 .DS_Store
 .idea
 *.tmp
-*___________________*.go
+comments*.go
