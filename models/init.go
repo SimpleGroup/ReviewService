@@ -4,10 +4,14 @@ import (
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/astaxie/beego/cache"
 )
+
+var Rc cache.Cache
 
 func Init() {
 
+	//数据库初始化
 	maxIdle := 30
 	maxConn := 30
 
@@ -32,6 +36,11 @@ func Init() {
 
 	if beego.AppConfig.String("runmode") == beego.DEV {
 		orm.Debug = true
+	}
+
+	//redis初始化
+	if Rc, err := cache.NewCache("redis",`{"key":"cacheRedis","conn":"127.0.0.1:6039","dbNum":"0","password":"thePassWord"}`); err!=nil{
+		panic(error(err))
 	}
 }
 

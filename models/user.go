@@ -5,17 +5,20 @@ import (
 	_ "time"
 	"github.com/astaxie/beego/orm"
 	"time"
+	"ReviewService/utils"
+	"github.com/george518/PPGo_ApiAdmin/models"
 )
 
 var (
-	tabName  = "user"
+	tabName = "user"
 )
 
 type User struct {
-	Id         int
+	Id         string `orm:"pk"`
 	UserName   string `orm:"column(user_name)"`
 	PassWord   string `orm:"column(user_pwd)"`
 	CreateTime int64  `orm:"column(user_time)"`
+	Token      string `orm:"column(user_token)"`
 }
 
 //自定义表名
@@ -23,11 +26,18 @@ func (u *User) TableName() string {
 	return "service_user"
 }
 
+//对外公开的结构体
+type UserRe struct {
+	Uid string
+	Token string
+}
+
 //注册用户时往数据库加用户
 func AddUser(u *User) bool {
 	var isSu bool
 	if GetUserByName(u) {
-		u.CreateTime=time.Now().Unix()
+		u.CreateTime = time.Now().Unix()
+		u.Id=utils.GetUUID()
 		_, e := orm.NewOrm().Insert(u)
 		if e != nil {
 			isSu = false

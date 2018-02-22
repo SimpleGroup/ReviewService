@@ -105,7 +105,7 @@
                     "200": {
                         "description": "",
                         "schema": {
-                            "$ref": "#/definitions/models.AllQuestion"
+                            "$ref": "#/definitions/models.User"
                         }
                     },
                     "403": {
@@ -163,30 +163,6 @@
         }
     },
     "definitions": {
-        "models.AllQuestion": {
-            "title": "AllQuestion",
-            "type": "object",
-            "properties": {
-                "Answer": {
-                    "type": "string"
-                },
-                "Category": {
-                    "type": "integer",
-                    "format": "int64"
-                },
-                "Id": {
-                    "type": "integer",
-                    "format": "int64"
-                },
-                "Question": {
-                    "type": "string"
-                },
-                "QuestionType": {
-                    "type": "integer",
-                    "format": "int64"
-                }
-            }
-        },
         "models.AllQuestionResult": {
             "title": "AllQuestionResult",
             "type": "object",
@@ -234,6 +210,29 @@
                 "Id": {
                     "type": "integer",
                     "format": "int64"
+                }
+            }
+        },
+        "models.User": {
+            "title": "User",
+            "type": "object",
+            "properties": {
+                "CreateTime": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "Id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "PassWord": {
+                    "type": "string"
+                },
+                "Token": {
+                    "type": "string"
+                },
+                "UserName": {
+                    "type": "string"
                 }
             }
         }
