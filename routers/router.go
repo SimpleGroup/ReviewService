@@ -9,7 +9,6 @@ package routers
 
 import (
 	"ReviewService/controllers"
-
 	"github.com/astaxie/beego"
 )
 
@@ -21,7 +20,8 @@ func init() {
 			),
 		),
 		beego.NSNamespace("/question",
-			beego.NSInclude(&controllers.QuestionController{},
+			beego.NSInclude(
+				&controllers.QuestionController{},
 			),
 		),
 	)

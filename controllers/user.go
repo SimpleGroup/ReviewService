@@ -3,11 +3,13 @@ package controllers
 import (
 	"ReviewService/models"
 	"ReviewService/utils"
+	"time"
+	"github.com/astaxie/beego"
 )
 
 // Operations about Users
 type UserController struct {
-	BaseController
+	beego.Controller
 }
 
 // @Title Login
@@ -33,6 +35,7 @@ func (u *UserController) Login() {
 			resData.Msg="登录成功"
 			userRe.Uid=user.Id
 			userRe.Token=utils.CreateToken(user)
+			models.Rc.Put(user.Id,user.Token, time.Hour*480)
 		}else {
 			resData.Code=MSG_ERR
 			resData.Msg="用户名或密码错误"

@@ -36,6 +36,7 @@ func (q *QuestionController) AddQuestion() {
 
 // @Title GetAllQuestion
 // @Description Get All Question From DB
+// @Param id query string true "用户的userId"
 // @Param pageNum query int true "每一页的条数"
 // @Param pageSize query int true "请求的是第几页的数据"
 // @Success 200 {object} models.question.AllQuestionResult

@@ -6,11 +6,13 @@ import (
 	"ReviewService/models"
 )
 
+var tokenKey = "myKey"
+
 func CreateToken(user *models.User) string {
 	claims := make(jwt.MapClaims)
 	claims["userId"]=user.Id
 	claims["exp"]=time.Now().Add(time.Hour*480).Unix()
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	tokenString, _ := token.SignedString([]byte("myKey"))
+	tokenString, _ := token.SignedString([]byte(tokenKey))
 	return tokenString
 }

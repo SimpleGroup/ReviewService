@@ -7,7 +7,10 @@ import (
 	"github.com/astaxie/beego/cache"
 )
 
-var Rc cache.Cache
+var(
+	Rc cache.Cache
+	errRedis error
+)
 
 func Init() {
 
@@ -39,8 +42,8 @@ func Init() {
 	}
 
 	//redis初始化
-	if Rc, err := cache.NewCache("redis",`{"key":"cacheRedis","conn":"127.0.0.1:6039","dbNum":"0","password":"thePassWord"}`); err!=nil{
-		panic(error(err))
+	if Rc,errRedis= cache.NewCache("redis",`{"key":"cacheRedis","conn":"127.0.0.1:6039","dbNum":"0","password":"thePassWord"}`); errRedis!=nil{
+		panic(errRedis)
 	}
 }
 
